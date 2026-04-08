@@ -5,8 +5,8 @@ export default function Home() {
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">ADA Sentinel</h1>
-          <p className="text-gray-400 text-sm mt-1">Autonomous Last-Mile Recovery Engine</p>
+          <h1 className="text-2xl font-semibold tracking-tight">SwiftLane</h1>
+          <p className="text-gray-400 text-sm mt-1">Smart Delivery Intelligence Platform</p>
         </div>
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
