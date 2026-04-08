@@ -1,4 +1,4 @@
-﻿# Swiftlane 🛰️
+﻿# Swiftlane 
 
 > Smart Delivery Intelligence Platform
 
