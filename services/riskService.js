@@ -4,7 +4,6 @@ function getRiskData() {
     let risk_type = "safe";
 
     if (risk_score > 75) {
-        // randomly assign type
         risk_type = Math.random() > 0.5 
             ? "customer_unavailable" 
             : "delay";

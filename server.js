@@ -1,17 +1,19 @@
-const express = require('express');
-const cors = require('cors');
 require('dotenv').config();
 
+const express = require('express');
+const cors = require('cors');
+
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 
-// test route
+// Test route
 app.get('/', (req, res) => {
     res.send("Backend is running 🚀");
 });
 
-// routes
+// Routes
 const deliveryRoutes = require('./routes/deliveryRoutes');
 app.use('/api', deliveryRoutes);
 
