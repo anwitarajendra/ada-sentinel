@@ -1,33 +1,28 @@
+import os
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv
-import os
-from dotenv import load_dotenv
-from sqlalchemy import create_engine
-# ... other imports ...
 
-# This tells Python exactly where to find the .env file relative to this script
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-load_dotenv(os.path.join(BASE_DIR, "..", ".env"))
+env_path = os.path.join(BASE_DIR, "..", ".env")
+load_dotenv(env_path)
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
-# This check prevents the 'got None' error by giving a helpful message instead
 if DATABASE_URL is None:
-    raise ValueError("DATABASE_URL not found. Check if your .env file exists in risk_service/")
+    raise ValueError(f"DATABASE_URL not found at {env_path}. Please check your .env file!")
 
-engine = create_engine(DATABASE_URL)
-# ... rest of your code ...
+engine = create_engine(
+    DATABASE_URL,
+    echo=True,           
+    pool_pre_ping=True   
+)
 
-load_dotenv(os.path.join(os.path.dirname(__file__), "..", ".env"))
-
-DATABASE_URL = os.getenv("DATABASE_URL")
-
-engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
+# 3. FASTAPI DEPENDENCY
 def get_db():
     db = SessionLocal()
     try:

@@ -1,24 +1,32 @@
-from sqlalchemy import Column, Integer, String, Float, DateTime
-from sqlalchemy.dialects.postgresql import JSONB
-from datetime import datetime , timezone
+from sqlalchemy import Column, Integer, String, Float, ForeignKey, JSON
+from sqlalchemy.orm import relationship
 from .database import Base
-
-class Delivery(Base):
-    __tablename__ = "deliveries"
-
-    id = Column(Integer, primary_key=True, index=True)
-    customer_id = Column(Integer)
-    driver_id = Column(Integer)
-    status = Column(String, default="pending")
-    risk_score = Column(Float, default=0.0)
-    signals = Column(JSONB)  # Example: {"weather_impact": 0.8, "traffic_delay": 0.6}
-    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
 class Customer(Base):
     __tablename__ = "customers"
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String)
-    history_score = Column(Float) # 0 to 1 (past reliability)
+    phone_number = Column(String)
+    address = Column(String)
+    latitude = Column(Float)
+    longitude = Column(Float)
+    missed_delivery_count = Column(Integer, default=0)
+    history_score = Column(Float, default=0.0)
+    
+    deliveries = relationship("Delivery", back_populates="customer")
+
+class Delivery(Base):
+    __tablename__ = "deliveries"
+    id = Column(Integer, primary_key=True, index=True)
+    customer_id = Column(Integer, ForeignKey("customers.id"))
+    risk_score = Column(Float, default=0.0)
+    signals = Column(JSON, default={})
+
+    status = Column(String, default="PENDING") 
+    proof_image_url = Column(String, nullable=True) 
+    verification_score = Column(Float, nullable=True) 
+
+    customer = relationship("Customer", back_populates="deliveries")
 
 class Driver(Base):
     __tablename__ = "drivers"
