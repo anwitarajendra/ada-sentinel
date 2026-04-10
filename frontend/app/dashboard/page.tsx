@@ -139,15 +139,23 @@ export default function Dashboard() {
           <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
             <p style={{ fontSize: "11px", color: textSecondary, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "2px" }}>Delivery risk feed</p>
             {deliveries.map((d, i) => (
-              <div key={d.id} onClick={() => setSelected(selected?.id === d.id ? null : d)} className="risk-card" style={{
-                background: selected?.id === d.id ? (dark ? "rgba(34,197,94,0.08)" : "#f0fdf4") : cardBg,
-                border: `1px solid ${selected?.id === d.id ? "rgba(34,197,94,0.4)" : cardBorder}`,
-                borderLeft: `3px solid ${riskColor(d.riskScore)}`,
-                borderRadius: "0 14px 14px 0", padding: "12px 14px",
-                transition: "all .15s", cursor: "pointer",
-                boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
-                animation: `fadeUp ${.3 + i * .08}s ease both`
-              }}>
+              <div
+                key={d.id}
+                onClick={() => setSelected(selected?.id === d.id ? null : d)}
+                className="risk-card"
+                style={{
+                  background: selected?.id === d.id ? (dark ? "rgba(34,197,94,0.08)" : "#f0fdf4") : cardBg,
+                  /* ── Fix: split `border` into sides so borderLeft doesn't conflict ── */
+                  borderTop: `1px solid ${selected?.id === d.id ? "rgba(34,197,94,0.4)" : cardBorder}`,
+                  borderRight: `1px solid ${selected?.id === d.id ? "rgba(34,197,94,0.4)" : cardBorder}`,
+                  borderBottom: `1px solid ${selected?.id === d.id ? "rgba(34,197,94,0.4)" : cardBorder}`,
+                  borderLeft: `3px solid ${riskColor(d.riskScore)}`,
+                  borderRadius: "0 14px 14px 0", padding: "12px 14px",
+                  transition: "all .15s", cursor: "pointer",
+                  boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
+                  animation: `fadeUp ${.3 + i * .08}s ease both`,
+                }}
+              >
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "4px" }}>
                   <div>
                     <p style={{ fontSize: "13px", fontWeight: 600, color: textPrimary }}>{d.customer.name}</p>

@@ -82,7 +82,22 @@ export default function Track() {
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                 {myDeliveries.map((d, i) => (
-                  <div key={d.id} onClick={() => setSelected(selected?.id === d.id ? null : d)} className="del-card" style={{ background: selected?.id === d.id ? "rgba(34,197,94,0.08)" : "rgba(255,255,255,0.02)", border: `1px solid ${selected?.id === d.id ? "rgba(34,197,94,0.4)" : "rgba(255,255,255,0.06)"}`, borderLeft: `3px solid ${riskColor(d.riskScore)}`, borderRadius: "0 12px 12px 0", padding: "14px 16px", cursor: "pointer", transition: "all .15s", animation: `fadeUp ${.2 + i * .08}s ease both` }}>
+                  <div
+                    key={d.id}
+                    onClick={() => setSelected(selected?.id === d.id ? null : d)}
+                    className="del-card"
+                    style={{
+                      background: selected?.id === d.id ? "rgba(34,197,94,0.08)" : "rgba(255,255,255,0.02)",
+                      /* ── Fix: split `border` into sides so borderLeft doesn't conflict ── */
+                      borderTop: `1px solid ${selected?.id === d.id ? "rgba(34,197,94,0.4)" : "rgba(255,255,255,0.06)"}`,
+                      borderRight: `1px solid ${selected?.id === d.id ? "rgba(34,197,94,0.4)" : "rgba(255,255,255,0.06)"}`,
+                      borderBottom: `1px solid ${selected?.id === d.id ? "rgba(34,197,94,0.4)" : "rgba(255,255,255,0.06)"}`,
+                      borderLeft: `3px solid ${riskColor(d.riskScore)}`,
+                      borderRadius: "0 12px 12px 0", padding: "14px 16px",
+                      cursor: "pointer", transition: "all .15s",
+                      animation: `fadeUp ${.2 + i * .08}s ease both`,
+                    }}
+                  >
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
                       <div>
                         <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" }}>
